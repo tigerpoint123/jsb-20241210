@@ -26,5 +26,5 @@ public class Question {
     private LocalDateTime createDate;
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE) // mappedBy = 참조 엔티티의 속성명. CascadeType.REMOVE : 질문을 지우면 답변도 지워지는 것처럼.
-    private List<Answer> answersList;
+    private List<Answer> answerList;
 }
