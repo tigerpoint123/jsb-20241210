@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -42,7 +43,13 @@ class DemoApplicationTests {
 
 	@Test
 	void findByIdJpa() {
+		Optional<Question> oq = this.questionRepository.findById(1);
 
+		if(oq.isPresent()) {
+			Question q = oq.get();
+			assertEquals("sbb가 뭐임", q.getSubject());
+
+		}
 	}
 
 }
