@@ -57,4 +57,17 @@ class DemoApplicationTests {
 		Question q = this.questionRepository.findBySubject("sbb가 뭐임");
 		assertEquals(1, q.getId());
 	}
+
+	@Test
+	void findBySubjectAndContentJpa() {
+		Question q = this.questionRepository.findBySubjectAndContent("sbb가 뭐임", "알려줘");
+		assertEquals(1, q.getId());
+	}
+
+	@Test
+	void findBySubjectLike() {
+		List<Question> qList = this.questionRepository.findBySubjectLike("sbb%");
+		Question q = qList.get(0);
+		assertEquals("sbb가 뭐임", q.getSubject());
+	}
 }
