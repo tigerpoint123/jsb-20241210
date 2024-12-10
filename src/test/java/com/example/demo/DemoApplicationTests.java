@@ -52,4 +52,9 @@ class DemoApplicationTests {
 		}
 	}
 
+	@Test
+	void findBySubjectJpa() {
+		Question q = this.questionRepository.findBySubject("sbb가 뭐임");
+		assertEquals(1, q.getId());
+	}
 }
