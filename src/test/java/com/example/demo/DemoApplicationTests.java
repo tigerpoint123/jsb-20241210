@@ -1,9 +1,10 @@
 package com.example.demo;
 
-import com.example.demo.Entity.Answer;
-import com.example.demo.Entity.Question;
-import com.example.demo.Repository.AnswerRepository;
-import com.example.demo.Repository.QuestionRepository;
+import com.example.demo.answer.Answer;
+import com.example.demo.question.Question;
+import com.example.demo.answer.AnswerRepository;
+import com.example.demo.question.QuestionRepository;
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,6 +16,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
+@Transactional
 class DemoApplicationTests {
     @Autowired
     private QuestionRepository questionRepository;
@@ -114,5 +116,17 @@ class DemoApplicationTests {
         assertTrue(oa.isPresent());
         Answer a = oa.get();
         assertEquals(2, a.getQuestion().getId());
+    }
+
+    @Test
+    void findQuestionWithAnswerJpa() {
+        Optional<Question> oq = this.questionRepository.findById(2);
+        assertTrue(oq.isPresent());
+        Question q = oq.get();
+
+        List<Answer> answerList = q.getAnswersList();
+
+        assertEquals(1, answerList.size());
+        assertEquals("네 자동으로 생성됩니다." , answerList.get(0).getContent());
     }
 }
