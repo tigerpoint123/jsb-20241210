@@ -1,6 +1,7 @@
 package com.example.demo.question;
 
 import com.example.demo.answer.Answer;
+import com.example.demo.user.SiteUser;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -27,4 +28,7 @@ public class Question {
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE) // mappedBy = 참조 엔티티의 속성명. CascadeType.REMOVE : 질문을 지우면 답변도 지워지는 것처럼.
     private List<Answer> answerList;
+
+    @ManyToOne // 사용자 한 명 질문 여러개
+    private SiteUser author;
 }
