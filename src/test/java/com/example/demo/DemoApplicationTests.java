@@ -4,6 +4,7 @@ import com.example.demo.answer.Answer;
 import com.example.demo.question.Question;
 import com.example.demo.answer.AnswerRepository;
 import com.example.demo.question.QuestionRepository;
+import com.example.demo.question.QuestionService;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-@Transactional
+//@Transactional
 class DemoApplicationTests {
     @Autowired
     private QuestionRepository questionRepository;
@@ -24,19 +25,28 @@ class DemoApplicationTests {
     @Autowired
     private AnswerRepository answerRepository;
 
+    @Autowired
+    private QuestionService questionService;
+
     @Test
     void saveJpa() {
-        Question q1 = new Question();
-        q1.setSubject("sbb가 뭐임");
-        q1.setContent("알려줘");
-        q1.setCreateDate(LocalDateTime.now());
-        this.questionRepository.save(q1);
+        for (int i = 1; i <= 300; i++) {
+            String subject = String.format("테스트 데이터 : [%03d]", i);
+            String content = "내용무";
 
-        Question q2 = new Question();
-        q2.setSubject("스프링 질문");
-        q2.setContent("id 자동생성 ?");
-        q2.setCreateDate(LocalDateTime.now());
-        this.questionRepository.save(q2);
+            this.questionService.create(subject, content);
+        }
+//        Question q1 = new Question();
+//        q1.setSubject("sbb가 뭐임");
+//        q1.setContent("알려줘");
+//        q1.setCreateDate(LocalDateTime.now());
+//        this.questionRepository.save(q1);
+//
+//        Question q2 = new Question();
+//        q2.setSubject("스프링 질문");
+//        q2.setContent("id 자동생성 ?");
+//        q2.setCreateDate(LocalDateTime.now());
+//        this.questionRepository.save(q2);
     }
 
     @Test
@@ -61,13 +71,13 @@ class DemoApplicationTests {
 
     @Test
     void findBySubjectJpa() {
-        Question q = this.questionRepository.findBySubject("sbb가 뭐임");
-        assertEquals(1, q.getId());
+        Question q = this.questionRepository.findBySubject("스프링 질문");
+        assertEquals(2, q.getId());
     }
 
     @Test
     void findBySubjectAndContentJpa() {
-        Question q = this.questionRepository.findBySubjectAndContent("sbb가 뭐임", "알려줘");
+        Question q = this.questionRepository.findBySubjectAndContent("스프링 질문", "id 자동생성 ?");
         assertEquals(1, q.getId());
     }
 
